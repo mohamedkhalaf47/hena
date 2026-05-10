@@ -4,6 +4,7 @@ import slugify from "slugify";
 import { connectDB } from "@/lib/db";
 import Workspace from "@/models/workspace";
 import { workspaceSchema } from "@/lib/validations/workspace.validation";
+import { getWorkspaces } from "@/services/workspace.service";
 
 export async function POST(req: Request) {
 	try {
@@ -54,26 +55,15 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
 	try {
-		await connectDB();
-
 		const { searchParams } = new URL(req.url);
 
-		const search = searchParams.get("search") || "";
-		const feature = searchParams.get("feature");
-
-		const query: Record<string, unknown> = {};
-
-		if (search) {
-			query.$text = {
-				$search: search,
-			};
-		}
-
-		if (feature) {
-			query.features = feature;
-		}
-
-		const workspaces = await Workspace.find(query).sort({ createdAt: -1 });
+		const workspaces = await getWorkspaces({
+			search: searchParams.get("search") ?? undefined,
+			feature: searchParams.getAll("feature"),
+			sort: searchParams.get("sort") ?? undefined,
+			minPrice: searchParams.get("minPrice") ?? undefined,
+			maxPrice: searchParams.get("maxPrice") ?? undefined,
+		});
 
 		return NextResponse.json(workspaces);
 	} catch (error) {

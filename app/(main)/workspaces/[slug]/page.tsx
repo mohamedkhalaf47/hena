@@ -1,7 +1,7 @@
-export default function page(){
-  return(
-    <>
-      <p>span</p>
-    </>
-  )
+export default function page() {
+	return (
+		<>
+			<p>Hello from</p>
+		</>
+	);
 }

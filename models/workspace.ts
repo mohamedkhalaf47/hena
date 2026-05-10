@@ -24,17 +24,22 @@ const workspaceSchema = new mongoose.Schema(
 			required: true,
 		},
 
+		shortAddress: {
+			type: String,
+			required: true,
+		},
+
 		images: [
 			{
 				type: String,
 			},
 		],
 		pricing: {
-			startingFrom: Number, 
+			startingFrom: Number,
 			packages: [
 				{
-					label: String, 
-					price: Number, 
+					label: String,
+					price: Number,
 					description: String,
 				},
 			],
@@ -43,14 +48,7 @@ const workspaceSchema = new mongoose.Schema(
 		features: [
 			{
 				type: String,
-				enum: [
-					"wifi",
-					"quiet",
-					"ac",
-					"meeting-room",
-					"printing",
-					"kitchen",
-				],
+				enum: ["wifi", "quiet", "ac", "meeting-room", "printing", "kitchen"],
 			},
 		],
 
