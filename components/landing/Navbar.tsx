@@ -5,11 +5,12 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 export function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname();
-
+	const { user } = useUser();
 	const navLinks = [
 		{ href: "/", label: "Home" },
 		{ href: "/workspaces", label: "Explore" },
@@ -47,22 +48,39 @@ export function Navbar() {
 
 					{/* Login Button - Right Side */}
 					<div className="hidden md:flex items-center gap-4">
-						<Button
-							asChild
-							variant="default"
-							className="font-plex font-medium py-4 px-6"
-						>
-							<Link href="/sign-in">Login</Link>
-						</Button>
+						{user ? (
+							<UserButton />
+						) : (
+							<Button
+								asChild
+								variant="default"
+								className="font-plex font-medium py-4 px-6"
+							>
+								<Link href="/sign-in">Login</Link>
+							</Button>
+						)}
 					</div>
 
 					{/* Mobile Menu Button */}
-					<button
-						onClick={() => setIsOpen(!isOpen)}
-						className="md:hidden p-2 hover:bg-surface-container-high rounded-lg transition-colors ml-auto"
-					>
-						{isOpen ? <X size={24} /> : <Menu size={24} />}
-					</button>
+					<div className="flex md:hidden items-center gap-3">
+						{user ? (
+							<UserButton />
+						) : (
+							<Button
+								asChild
+								variant="default"
+								className="font-plex font-medium w-2/3 py-4 px-6"
+							>
+								<Link href="/sign-in">Login</Link>
+							</Button>
+						)}
+						<button
+							onClick={() => setIsOpen(!isOpen)}
+							className="md:hidden p-2 hover:bg-surface-container-high rounded-lg transition-colors ml-auto"
+						>
+							{isOpen ? <X size={24} /> : <Menu size={24} />}
+						</button>
+					</div>
 				</div>
 
 				{/* Mobile Menu */}
@@ -77,13 +95,6 @@ export function Navbar() {
 								{link.label}
 							</Link>
 						))}
-						<Button
-							asChild
-							variant="default"
-							className="w-full font-plex font-medium"
-						>
-							<Link href="/sign-in">Login</Link>
-						</Button>
 					</div>
 				)}
 			</div>

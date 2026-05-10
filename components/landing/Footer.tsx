@@ -24,12 +24,12 @@ export function Footer() {
 						<h4 className="font-jakarta font-semibold text-on-surface mb-4">
 							Product
 						</h4>
-						<div className="space-y-2 text-sm">
+						<div className="space-y-3 text-sm">
 							<Link
 								href="/workspaces"
 								className="text-on-surface-variant hover:text-primary transition-colors"
 							>
-								Explore
+								Workspaces
 							</Link>
 							<Link
 								href="/about"
@@ -45,7 +45,7 @@ export function Footer() {
 						<h4 className="font-jakarta font-semibold text-on-surface mb-4">
 							Legal
 						</h4>
-						<div className="space-y-2 text-sm">
+						<div className="space-y-3 text-sm">
 							<Link
 								href="#"
 								className="text-on-surface-variant hover:text-primary transition-colors"

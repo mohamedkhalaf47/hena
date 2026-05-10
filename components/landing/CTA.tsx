@@ -25,14 +25,14 @@ export default function CTA() {
 						variant="outline"
 						className="border-2 border-on-primary text-primary font-plex font-medium py-8 px-10 hover:scale-105 hover:text-primary"
 					>
-						<Link href="/partner">Create an Account</Link>
+						<Link href="/sign-up">Create an Account</Link>
 					</Button>
 					<Button
 						asChild
 						variant="outline"
 						className="border-2 border-on-primary text-white font-plex font-medium py-8 px-10 bg-transparent"
 					>
-						<Link href="/partner">Partner with Us</Link>
+						<Link href="/workspaces">Explore Workspaces</Link>
 					</Button>
 				</div>
 

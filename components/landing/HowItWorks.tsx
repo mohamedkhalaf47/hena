@@ -1,22 +1,24 @@
 "use client";
-import { Search, CheckCircle, ArrowLeftRight } from "lucide-react";
+import { Search, ArrowLeftRight, Rocket } from "lucide-react";
 
 const steps = [
 	{
 		icon: Search,
 		title: "Search",
 		description:
-			"Browse and search for workspaces by name, location, or amenities",
+			"Browse through dozens of verified workspaces in Assiut with real photos and pricing.",
 	},
 	{
 		icon: ArrowLeftRight,
 		title: "Compare",
-		description: "Compare prices, features, and reviews to find the best fit",
+		description:
+			"Filter by your needs—quietness, proximity, or budget—to find your perfect match.",
 	},
 	{
-		icon: CheckCircle,
-		title: "Choose",
-		description: "Pick your workspace and get directions or contact info",
+		icon: Rocket,
+		title: "Go",
+		description:
+			"Book your desk instantly or just drop by. Your productivity won't wait.",
 	},
 ];
 
