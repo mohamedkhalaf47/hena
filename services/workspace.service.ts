@@ -51,3 +51,44 @@ export async function getAllFeatures(): Promise<string[]> {
 	);
 	return [...new Set(features)];
 }
+
+export async function getWorkspaceBySlug(slug: string) {
+	try {
+		await connectDB();
+
+		const workspace = await Workspace.findOne({
+			slug,
+		}).lean();
+
+		if (!workspace) {
+			return null;
+		}
+
+		return JSON.parse(JSON.stringify(workspace));
+	} catch (error) {
+		console.error(error);
+		throw new Error("Failed to fetch workspace");
+	}
+}
+
+export async function getRelatedWorkspaces(currentWorkspaceId: string) {
+	try {
+		await connectDB();
+
+		const workspaces = await Workspace.find({
+			_id: {
+				$ne: currentWorkspaceId,
+			},
+		})
+			.limit(3)
+			.sort({
+				averageRating: -1,
+			})
+			.lean();
+
+		return JSON.parse(JSON.stringify(workspaces));
+	} catch (error) {
+		console.error(error);
+		throw new Error("Failed to fetch related workspaces");
+	}
+}

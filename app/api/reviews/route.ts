@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Review from "@/models/review";
 import Workspace from "@/models/workspace";
+import { Types } from "mongoose";
 
 export async function POST(req: Request) {
 	try {
@@ -29,17 +30,19 @@ export async function POST(req: Request) {
 
 		const body = await req.json();
 
-		const review = await Review.create({
-			clerkUserId: userId,
-			workspace: body.workspace,
-			rating: body.rating,
-			comment: body.comment,
-			userName: user.fullName,
-			userImage: user.imageUrl,
-		});
+		const review = await Review.findOneAndUpdate(
+			{ clerkUserId: userId, workspace: body.workspace },
+			{
+				rating: body.rating,
+				comment: body.comment,
+				userName: user.fullName,
+				userImage: user.imageUrl,
+			},
+			{ upsert: true, new: true },
+		);
 
 		const result = await Review.aggregate([
-			{ $match: { workspace: review.workspace } },
+			{ $match: { workspace: new Types.ObjectId(body.workspace) } },
 			{ $group: { _id: null, avg: { $avg: "$rating" }, count: { $sum: 1 } } },
 		]);
 
@@ -52,6 +55,7 @@ export async function POST(req: Request) {
 			status: 201,
 		});
 	} catch (error) {
+		console.log(error);
 		return NextResponse.json(
 			{
 				message:
