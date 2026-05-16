@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export function HeroSection() {
 	return (
@@ -38,14 +39,18 @@ export function HeroSection() {
 
 				{/* Quick Categories */}
 				<div className="flex flex-wrap justify-center gap-3 mb-8">
-					{["Wifi","Study", "Quiet", "Meeting Room", "Near University"].map(
+					{["wifi", "ac", "quiet", "meeting-room", "kitchen"].map(
 						(category) => (
 							<Button
 								key={category}
 								variant="outline"
-								className="rounded-full border-outline-variant hover:border-primary hover:text-primary transition-colors cursor-pointer"
+								className="rounded-full border-outline-variant hover:border-primary hover:text-primary transition-colors cursor-pointer capitalize"
 							>
-								{category}
+								<Link
+									href={`http://localhost:3000/workspaces?feature=${category}`}
+								>
+									{category}
+								</Link>
 							</Button>
 						),
 					)}

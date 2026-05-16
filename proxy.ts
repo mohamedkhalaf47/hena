@@ -1,6 +1,15 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default clerkMiddleware();
+const isDashboard = createRouteMatcher(["/dashboard(.*)"]);
+
+export default clerkMiddleware(async (auth, req) => {
+	if (isDashboard(req)) {
+		const { sessionClaims } = await auth();
+		if (sessionClaims?.metadata?.role !== "admin") {
+			return Response.redirect(new URL("/", req.url));
+		}
+	}
+});
 
 export const config = {
 	matcher: [

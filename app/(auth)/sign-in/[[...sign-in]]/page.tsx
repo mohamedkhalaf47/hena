@@ -5,6 +5,9 @@ export default function SignInPage() {
 		<div className="min-h-screen w-full flex items-center justify-center">
 			<SignIn
 				appearance={{
+					layout: {
+						unsafe_disableDevelopmentModeWarnings: true,
+					},
 					elements: {
 						rootBox: "w-full",
 						card: "shadow-none border border-[#E2E8F0] rounded-xl p-6 bg-white",
