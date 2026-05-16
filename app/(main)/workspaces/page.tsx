@@ -1,5 +1,17 @@
 import { WorkspacesClient } from "@/components/workspaces/workspaces-client";
 import { getWorkspaces, getAllFeatures } from "@/services/workspace.service";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Explore Workspaces",
+	description:
+		"Browse all coworking and study spaces in Assiut. Filter by features, price, and more.",
+	openGraph: {
+		title: "Explore Workspaces | Hena",
+		description:
+			"Browse all coworking and study spaces in Assiut. Filter by features, price, and more.",
+	},
+};
 
 interface PageProps {
 	searchParams: Promise<{

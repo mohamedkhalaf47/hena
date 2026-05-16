@@ -13,6 +13,9 @@ import { auth } from "@clerk/nextjs/server";
 import RelatedWorkspaces from "@/components/workspace/related-workspaces";
 import { getWorkspaceReviews } from "@/services/review.service";
 import WorkspaceReviewsSection from "@/components/workspace/workspace-reviews-section";
+import Workspace from "@/models/workspace";
+import { connectDB } from "@/lib/db";
+import type { Metadata } from "next";
 
 interface Props {
 	params: Promise<{
@@ -20,22 +23,50 @@ interface Props {
 	}>;
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params;
 
-	const workspace = await getWorkspaceBySlug(slug);
+	await connectDB();
+	const workspace = (await Workspace.findOne({ slug })
+		.select("name shortAddress description images")
+		.lean()) as {
+		name: string;
+		shortAddress: string;
+		description: string;
+		images: string[];
+	} | null;
 
 	if (!workspace) {
-		return {};
+		return {
+			title: "Workspace Not Found",
+		};
 	}
 
 	return {
 		title: workspace.name,
 		description: workspace.description,
 		openGraph: {
-			images: workspace.images,
+			title: `${workspace.name} | Hena`,
+			description: workspace.description,
+			images: workspace.images[0]
+				? [{ url: workspace.images[0], width: 1200, height: 630 }]
+				: [],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${workspace.name} | Hena`,
+			description: workspace.description,
+			images: workspace.images[0] ? [workspace.images[0]] : [],
 		},
 	};
+}
+
+export async function generateStaticParams() {
+	await connectDB();
+	const workspaces = (await Workspace.find({}).select("slug").lean()) as {
+		slug: string;
+	}[];
+	return workspaces.map((ws) => ({ slug: ws.slug }));
 }
 
 export default async function WorkspacePage({ params }: Props) {
