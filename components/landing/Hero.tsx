@@ -47,7 +47,7 @@ export function HeroSection() {
 								className="rounded-full border-outline-variant hover:border-primary hover:text-primary transition-colors cursor-pointer capitalize"
 							>
 								<Link
-									href={`http://localhost:3000/workspaces?feature=${category}`}
+									href={`https://hena-workspaces.vercel.app/workspaces?feature=${category}`}
 								>
 									{category}
 								</Link>
