@@ -10,6 +10,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@/components/analytics";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -85,6 +86,7 @@ export default function RootLayout({
 					<main>{children}</main>
 					<Toaster richColors position="top-right" />
 					<Analytics />
+					<SpeedInsights />
 				</body>
 			</ClerkProvider>
 		</html>
