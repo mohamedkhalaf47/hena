@@ -9,6 +9,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@/components/analytics";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -44,7 +45,6 @@ export const metadata: Metadata = {
 		"freelancer Assiut",
 		"hena",
 		"هنا",
-		
 	],
 	openGraph: {
 		type: "website",
@@ -83,7 +83,8 @@ export default function RootLayout({
 			<ClerkProvider>
 				<body className="min-h-full flex flex-col">
 					<main>{children}</main>
-					<Toaster richColors position="top-right"/>
+					<Toaster richColors position="top-right" />
+					<Analytics />
 				</body>
 			</ClerkProvider>
 		</html>
